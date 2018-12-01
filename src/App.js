@@ -1,25 +1,48 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
+import { DataTable } from 'react-data-components';
 
 class App extends Component {
+
+  
+  
   render() {
+
+    
+    var names = [ 'Carlos', 'Juan', 'Jesus', 'Alberto', 'John' ];
+    var cities = [ 'Chicago', 'Tampico', 'San Francisco', 'Mexico City', 'Boston', 'New York' ];
+    var addresses = [ '333 West Wacker Drive', '1931 Insurgentes Sur', '1 Lombard Street', '55 Av Hidalgo'];
+
+    var data = [];
+    for (var i = 0; i < 1000; i++) {
+
+        data.push({
+          id: i,
+          name: names[~~(Math.random() * names.length)],
+          city: cities[~~(Math.random() * cities.length)],
+          address: addresses[~~(Math.random() * addresses.length)]
+        });
+
+    }
+
+    var columns = [
+      { title: 'Name', prop: 'name'  },
+      { title: 'City', prop: 'city' },
+      { title: 'Address', prop: 'address' }
+    ];
+
     return (
+      
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+         <DataTable
+            className="container"
+            keys="id"
+            columns={columns}
+            initialData={data}
+            initialPageLength={5}
+            initialSortBy={{ prop: 'city', order: 'descending' }}
+            pageLengthOptions={[ 5, 20, 50 ]}
+          />
       </div>
     );
   }
